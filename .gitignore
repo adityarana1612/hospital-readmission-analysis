@@ -1,0 +1,45 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+
+# --- Data (downloaded from CMS; reproducible via src/data_ingestion.py) ---
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# --- Credentials / secrets: NEVER commit ---
+.env
+.env.*
+!.env.example
+*.rsp
+wallet/
+Wallet_*/
+tnsnames.ora
+sqlnet.ora
+*.pem
+*.key
+
+# --- Logs and temporary files ---
+logs/
+*.log
+*.tmp
+*.bak
+
+# --- Power BI (binary files can be large; commit deliberately if desired) ---
+dashboard/*.pbix
+dashboard/*.pbit.bak
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
