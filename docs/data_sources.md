@@ -27,9 +27,9 @@ Measures: `READM-30-AMI-HRRP`, `READM-30-CABG-HRRP`, `READM-30-COPD-HRRP`, `READ
 `READM-30-HIP-KNEE-HRRP`, `READM-30-PN-HRRP`.
 
 Observed data issues:
-- `Excess Readmission Ratio` (ERR), predicted and expected rates are blank in 6,610 rows (footnotes 1, 5, 7, 29).
-- `Number of Readmissions` is `Too Few to Report` in 3,683 rows (suppressed; not zero).
-- `Number of Discharges` is blank in 10,088 rows (CMS suppresses it more often than ERR).
+- `Excess Readmission Ratio` (ERR), predicted and expected rates are `N/A` in 6,610 rows (footnotes 1, 5, 7; footnote 29 appears on rows that do have an ERR).
+- `Number of Readmissions` is `Too Few to Report` in 3,683 rows and `N/A` in 6,610 (suppressed; not zero).
+- `Number of Discharges` is `N/A` in 10,088 rows (CMS suppresses it more often than ERR).
 
 ## 2. FY 2026 HRRP Supplemental Data File (payment adjustment)
 

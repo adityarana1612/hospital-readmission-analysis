@@ -99,8 +99,9 @@ def standardize_columns(df: pd.DataFrame) -> pd.DataFrame:
 def to_numeric(series: pd.Series, missing_tokens: tuple[str, ...] = (".", "N/A", "Not Available",
                                                                     "Not Applicable")) -> pd.Series:
     """Convert to float. Known CMS missing tokens become NaN; anything else that
-    fails to parse also becomes NaN (callers flag such rows separately)."""
-    s = series.astype("string").str.strip().str.rstrip("%")
+    fails to parse also becomes NaN (callers flag such rows separately).
+    Thousands separators are removed: the Supplemental file writes "1,218"."""
+    s = series.astype("string").str.strip().str.rstrip("%").str.replace(",", "", regex=False)
     s = s.mask(s.isin(missing_tokens))
     return pd.to_numeric(s, errors="coerce").astype(float)
 

@@ -42,13 +42,18 @@ def test_analyzable_rows_have_err_and_excluded_do_not(processed_dir):
 
 
 def test_penalty_indicator_matches_cms_definition(processed_dir):
-    """CMS: Y iff eligible discharges >= 25 and ERR > peer-group median ERR."""
+    """CMS: Y iff eligible discharges >= 25 and ERR > peer-group median ERR.
+
+    The only tolerated disagreements are exact ties at 4 decimal places (CMS
+    compares unrounded values). A loose % threshold previously hid a parsing bug.
+    """
     mf = _load(processed_dir, "measure_fact")
     m = mf[mf.PENALTY_INDICATOR.isin(["Y", "N"]) & mf.EXCESS_READMISSION_RATIO.notna()
            & mf.PEER_GROUP_MEDIAN_ERR.notna()]
+    assert m["ELIGIBLE_DISCHARGES"].notna().all()
     rule = (m.ELIGIBLE_DISCHARGES >= 25) & (m.EXCESS_READMISSION_RATIO > m.PEER_GROUP_MEDIAN_ERR)
-    agreement = (rule == (m.PENALTY_INDICATOR == "Y")).mean()
-    assert agreement > 0.99, f"penalty rule agreement only {agreement:.4f}"
+    disagree = m[rule != (m.PENALTY_INDICATOR == "Y")]
+    assert (disagree.EXCESS_READMISSION_RATIO == disagree.PEER_GROUP_MEDIAN_ERR).all(), disagree.head()
 
 
 def test_payment_factor_and_reduction_pct_consistent(processed_dir):

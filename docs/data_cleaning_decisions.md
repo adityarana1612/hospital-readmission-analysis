@@ -43,10 +43,11 @@ Provider Data ERR equals the Supplemental ERR in every case (tolerance 0.0001).
 | Malformed or missing CCN | Moved to `review_records.csv` with a reason | Never pad, guess or generate identifiers |
 | Federal IDs (`01014F`, VA/DoD) | Accepted as valid format | Legitimate CMS IDs; these facilities are not in HRRP anyway |
 | `Too Few to Report` readmissions | Value set to missing + `READMISSIONS_SUPPRESSED = True` | Suppressed is not zero |
-| Missing ERR (footnotes 1, 5, 7, 29) | `RECORD_STATUS = EXCLUDED_NO_ERR`; **not imputed** | ERR is hospital-specific and risk-adjusted; a national or state mean would fabricate performance |
+| Missing ERR (`N/A`; footnotes 1, 5, 7) | `RECORD_STATUS = EXCLUDED_NO_ERR`; **not imputed** | ERR is hospital-specific and risk-adjusted; a national or state mean would fabricate performance |
 | Out-of-range values or readmissions > discharges | `RECORD_STATUS = REVIEW` | None occurred in this release |
 | Duplicate hospital × measure × period | All copies moved to review | None occurred in this release |
 | CMS `.` / `N/A` / `Not Available` | Converted to missing | Documented CMS missing-value tokens |
+| Thousands separators (`"1,218"` in Supplemental) | Removed before numeric conversion | Found by the Oracle penalty-rule check: 193 values had become missing |
 | Supplemental footer row | Dropped | Not data |
 | Teaching status | Derived: `Resident to Bed Ratio > 0` → Teaching | No official yes/no field exists. This is a proxy. |
 | `IS_PENALIZED` (hospital level) | Derived: `Payment adjustment factor < 1.0` | Uses the official factor, not an invented flag |

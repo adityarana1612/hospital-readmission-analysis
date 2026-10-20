@@ -28,9 +28,10 @@ def test_standardize_column_name():
 
 
 def test_to_numeric_handles_cms_tokens():
-    s = pd.Series(["1.5", ".", "N/A", "Not Available", "0.12%", None, "abc"])
+    s = pd.Series(["1.5", ".", "N/A", "Not Available", "0.12%", None, "abc", "1,218"])
     out = dc.to_numeric(s)
     assert out.iloc[0] == 1.5 and out.iloc[4] == 0.12
+    assert out.iloc[7] == 1218.0                      # thousands separator (Supplemental file)
     assert out.iloc[[1, 2, 3, 5, 6]].isna().all()
     assert out.dtype == float
 
