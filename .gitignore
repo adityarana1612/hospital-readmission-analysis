@@ -43,3 +43,6 @@ dashboard/*.pbit.bak
 Thumbs.db
 .vscode/
 .idea/
+
+# --- Large regenerable SQL export (python -m src.oracle_loader --all) ---
+reports/sql_results/hospital_rankings__hospital_measure_percentiles.csv

@@ -1,0 +1,87 @@
+CHARACTERISTIC,GRP,MEASURE_CODE,N,MEAN_ERR
+Bed size,100-299 beds,AMI,923,1.0028
+Bed size,300+ beds,AMI,625,1.0031
+Bed size,<100 beds,AMI,187,0.9919
+Bed size,Unknown,AMI,1,1.0527
+Bed size,100-299 beds,CABG,346,1.0131
+Bed size,300+ beds,CABG,516,0.995
+Bed size,<100 beds,CABG,16,0.9775
+Bed size,100-299 beds,COPD,1099,1.0034
+Bed size,300+ beds,COPD,639,1.0021
+Bed size,<100 beds,COPD,584,0.9957
+Bed size,Unknown,COPD,1,1.0179
+Bed size,100-299 beds,HF,1183,1.0061
+Bed size,300+ beds,HF,654,0.9958
+Bed size,<100 beds,HF,783,0.999
+Bed size,Unknown,HF,1,1.02
+Bed size,100-299 beds,HIP_KNEE,661,1.0281
+Bed size,300+ beds,HIP_KNEE,482,0.9956
+Bed size,<100 beds,HIP_KNEE,303,0.9652
+Bed size,Unknown,HIP_KNEE,1,0.8782
+Bed size,100-299 beds,PN,1185,1.0071
+Bed size,300+ beds,PN,651,1.0038
+Bed size,<100 beds,PN,877,0.9922
+Bed size,Unknown,PN,2,1.0113
+Ownership,Government,AMI,179,1.0082
+Ownership,Proprietary,AMI,339,1.0189
+Ownership,Unknown,AMI,1,1.0527
+Ownership,Voluntary,AMI,1217,0.996
+Ownership,Government,CABG,83,1.0072
+Ownership,Proprietary,CABG,149,1.0327
+Ownership,Voluntary,CABG,646,0.994
+Ownership,Government,COPD,291,1.0009
+Ownership,Proprietary,COPD,426,1.0044
+Ownership,Unknown,COPD,1,1.0179
+Ownership,Voluntary,COPD,1605,1.0003
+Ownership,Government,HF,344,1.007
+Ownership,Proprietary,HF,500,1.0164
+Ownership,Unknown,HF,1,1.02
+Ownership,Voluntary,HF,1776,0.9961
+Ownership,Government,HIP_KNEE,153,0.9991
+Ownership,Proprietary,HIP_KNEE,317,1.0169
+Ownership,Unknown,HIP_KNEE,1,0.8782
+Ownership,Voluntary,HIP_KNEE,976,1.0007
+Ownership,Government,PN,382,1.0
+Ownership,Proprietary,PN,519,1.0162
+Ownership,Unknown,PN,2,1.0113
+Ownership,Voluntary,PN,1812,0.9976
+Teaching status,Non-teaching,AMI,704,0.9984
+Teaching status,Teaching,AMI,1031,1.004
+Teaching status,Unknown,AMI,1,1.0527
+Teaching status,Non-teaching,CABG,227,1.0035
+Teaching status,Teaching,CABG,651,1.0012
+Teaching status,Non-teaching,COPD,1171,0.9991
+Teaching status,Teaching,COPD,1151,1.0032
+Teaching status,Unknown,COPD,1,1.0179
+Teaching status,Non-teaching,HF,1393,1.0007
+Teaching status,Teaching,HF,1227,1.0023
+Teaching status,Unknown,HF,1,1.02
+Teaching status,Non-teaching,HIP_KNEE,687,1.0005
+Teaching status,Teaching,HIP_KNEE,759,1.0073
+Teaching status,Unknown,HIP_KNEE,1,0.8782
+Teaching status,Non-teaching,PN,1489,0.9995
+Teaching status,Teaching,PN,1224,1.0039
+Teaching status,Unknown,PN,2,1.0113
+Urban/rural,Large urban,AMI,679,1.0104
+Urban/rural,Other urban,AMI,846,0.9969
+Urban/rural,Rural,AMI,210,0.993
+Urban/rural,Unknown,AMI,1,1.0527
+Urban/rural,Large urban,CABG,349,0.9962
+Urban/rural,Other urban,CABG,486,1.0056
+Urban/rural,Rural,CABG,43,1.0041
+Urban/rural,Large urban,COPD,842,1.006
+Urban/rural,Other urban,COPD,991,0.9989
+Urban/rural,Rural,COPD,489,0.9972
+Urban/rural,Unknown,COPD,1,1.0179
+Urban/rural,Large urban,HF,946,1.0061
+Urban/rural,Other urban,HF,1089,0.9972
+Urban/rural,Rural,HF,585,1.0017
+Urban/rural,Unknown,HF,1,1.02
+Urban/rural,Large urban,HIP_KNEE,570,1.0109
+Urban/rural,Other urban,HIP_KNEE,674,1.0026
+Urban/rural,Rural,HIP_KNEE,202,0.9898
+Urban/rural,Unknown,HIP_KNEE,1,0.8782
+Urban/rural,Large urban,PN,964,1.0111
+Urban/rural,Other urban,PN,1110,0.9993
+Urban/rural,Rural,PN,639,0.9908
+Urban/rural,Unknown,PN,2,1.0113

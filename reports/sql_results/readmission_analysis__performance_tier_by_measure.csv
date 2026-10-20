@@ -1,0 +1,31 @@
+MEASURE_CODE,TIER,HOSPITALS
+AMI,0 No ERR published,1319
+AMI,1 Not eligible (<25 discharges),32
+AMI,2 At or below peer median,822
+AMI,3 Up to 5% above peer median,487
+AMI,4 More than 5% above peer median,395
+CABG,0 No ERR published,2177
+CABG,1 Not eligible (<25 discharges),11
+CABG,2 At or below peer median,429
+CABG,3 Up to 5% above peer median,178
+CABG,4 More than 5% above peer median,260
+COPD,0 No ERR published,732
+COPD,1 Not eligible (<25 discharges),41
+COPD,2 At or below peer median,1142
+COPD,3 Up to 5% above peer median,787
+COPD,4 More than 5% above peer median,353
+HF,0 No ERR published,434
+HF,1 Not eligible (<25 discharges),42
+HF,2 At or below peer median,1288
+HF,3 Up to 5% above peer median,749
+HF,4 More than 5% above peer median,542
+HIP_KNEE,0 No ERR published,1608
+HIP_KNEE,1 Not eligible (<25 discharges),29
+HIP_KNEE,2 At or below peer median,713
+HIP_KNEE,3 Up to 5% above peer median,198
+HIP_KNEE,4 More than 5% above peer median,507
+PN,0 No ERR published,340
+PN,1 Not eligible (<25 discharges),42
+PN,2 At or below peer median,1354
+PN,3 Up to 5% above peer median,729
+PN,4 More than 5% above peer median,590
