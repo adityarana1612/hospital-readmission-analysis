@@ -69,3 +69,16 @@ def test_reconstructed_reduction_matches_official(processed_dir):
     diff = sa.reconstruction_check(sa.payment_contributions(mf, dim))
     assert len(diff) > 2900
     assert diff.max() < 0.01   # official values are rounded to 0.01 percentage points
+
+
+def test_pareto_matches_oracle_sql_export(processed_dir):
+    """Python and Oracle implement the Pareto independently; their shares must agree."""
+    sql_csv = processed_dir.parents[1] / "reports" / "sql_results" / "readmission_analysis__pareto_payment_contribution_by_measure.csv"
+    if not sql_csv.exists():
+        pytest.skip("Oracle results not exported - run `python -m src.oracle_loader --all`")
+    mf = pd.read_csv(processed_dir / "measure_fact.csv", dtype={"FACILITY_ID": str})
+    dim = pd.read_csv(processed_dir / "hospital_dim.csv", dtype={"FACILITY_ID": str})
+    py = sa.pareto_table(sa.payment_contributions(mf, dim), "MEASURE_CODE", "CONTRIB_PCT_POINTS")
+    sql = pd.read_csv(sql_csv)
+    assert py["MEASURE_CODE"].tolist() == sql["MEASURE_CODE"].tolist()
+    assert py["SHARE_PCT"].round(2).tolist() == pytest.approx(sql["SHARE_PCT"].tolist(), abs=0.01)
