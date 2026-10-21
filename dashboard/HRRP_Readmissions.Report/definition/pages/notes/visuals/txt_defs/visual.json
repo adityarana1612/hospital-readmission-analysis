@@ -1,0 +1,103 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "txt_defs",
+  "position": {
+    "x": 16,
+    "y": 76,
+    "z": 2000,
+    "width": 616,
+    "height": 500,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Metric definitions",
+                    "textStyle": {
+                      "fontSize": "12pt",
+                      "fontWeight": "bold",
+                      "color": "#0b0b0b"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "ERR (excess readmission ratio): predicted / expected 30-day readmission rate, risk-adjusted by CMS. >1 = more readmissions than an average hospital with the same patients.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#52514e"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Penalty flag: official CMS indicator; Y when eligible discharges >= 25 and ERR > peer-group median ERR.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#52514e"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Payment reduction %: FY 2026 HRRP reduction to base operating DRG payments (official, 0-3%).",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#52514e"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Payment-reduction points: each hospital's official reduction split across measures with the CMS formula (DRG ratio x (ERR - peer median) x neutrality modifier). Percentage points, not dollars.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#52514e"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Est. excess readmissions: readmissions x (1 - 1/ERR) where ERR > 1. A derived estimate, not a CMS count; rows with suppressed counts (mostly small hospitals) are excluded.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#52514e"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Teaching status: proxy = resident-to-bed ratio > 0 (FY 2026 IPPS Impact File).",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#52514e"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,166 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "tbl_state",
+  "position": {
+    "x": 16,
+    "y": 444,
+    "z": 7000,
+    "width": 1248,
+    "height": 240,
+    "tabOrder": 7000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hospital"
+                    }
+                  },
+                  "Property": "State"
+                }
+              },
+              "queryRef": "Hospital.State",
+              "nativeQueryRef": "State"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hospital"
+                    }
+                  },
+                  "Property": "Hospitals with Payment Factor"
+                }
+              },
+              "queryRef": "Hospital.Hospitals with Payment Factor",
+              "nativeQueryRef": "Hospitals with Payment Factor"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hospital"
+                    }
+                  },
+                  "Property": "% Hospitals with Payment Reduction"
+                }
+              },
+              "queryRef": "Hospital.% Hospitals with Payment Reduction",
+              "nativeQueryRef": "% Hospitals with Payment Reduction"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hospital"
+                    }
+                  },
+                  "Property": "Mean Payment Reduction %"
+                }
+              },
+              "queryRef": "Hospital.Mean Payment Reduction %",
+              "nativeQueryRef": "Mean Payment Reduction %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ReadmissionFact"
+                    }
+                  },
+                  "Property": "Mean ERR"
+                }
+              },
+              "queryRef": "ReadmissionFact.Mean ERR",
+              "nativeQueryRef": "Mean ERR"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ReadmissionFact"
+                    }
+                  },
+                  "Property": "% ERR Above 1"
+                }
+              },
+              "queryRef": "ReadmissionFact.% ERR Above 1",
+              "nativeQueryRef": "% ERR Above 1"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Hospital"
+                  }
+                },
+                "Property": "Mean Payment Reduction %"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": false
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'State summary'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#0b0b0b'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,220 @@
+table Hospital
+	lineageTag: 95c95636-1c1f-5c94-b448-e00ba6cc79ea
+
+	/// HRRP hospitals in the current filter.
+	measure Hospitals = COUNTROWS ( Hospital )
+		formatString: #,0
+		lineageTag: 8070773e-ebd4-5ac6-b301-21cbf827d905
+
+	/// Hospitals in the FY 2026 HRRP Supplemental File (Maryland excluded by CMS).
+	measure 'Hospitals with Payment Factor' = CALCULATE ( COUNTROWS ( Hospital ), Hospital[Has Payment Factor] = "Yes" )
+		formatString: #,0
+		lineageTag: d207c481-4aea-5b14-9c7b-ea392caa3349
+
+	/// Share of hospitals with an official payment adjustment factor below 1.0000.
+	measure '% Hospitals with Payment Reduction' = DIVIDE ( CALCULATE ( COUNTROWS ( Hospital ), Hospital[Payment Reduced] = "Yes" ), [Hospitals with Payment Factor] )
+		formatString: 0.0%
+		lineageTag: 911f0b1b-61d4-5b5b-b5c6-760a89780dd8
+
+	/// Average FY 2026 HRRP reduction to base operating DRG payments (0-3%).
+	measure 'Mean Payment Reduction %' = AVERAGE ( Hospital[Payment Reduction %] )
+		formatString: 0.00"%"
+		lineageTag: 1c1050ff-d8cb-51ce-88c1-c6bb64a6ce3c
+
+	/// Median FY 2026 HRRP payment reduction.
+	measure 'Median Payment Reduction %' = MEDIAN ( Hospital[Payment Reduction %] )
+		formatString: 0.00"%"
+		lineageTag: 1503450e-9950-5153-a301-ba86b21350a2
+
+	/// Hospitals at the maximum 3% reduction.
+	measure 'Hospitals at 3% Cap' = CALCULATE ( COUNTROWS ( Hospital ), Hospital[Payment Reduction %] >= 3 )
+		formatString: #,0
+		lineageTag: 0baa40f1-3288-533d-b6c7-964a513e160a
+
+	/// Number of the six measures with penalty indicator = Y (single hospital).
+	measure 'Hospital Measures Flagged' = MAX ( Hospital[Measures Flagged] )
+		formatString: 0
+		lineageTag: fc8697a5-62d5-5945-8f89-560fa6d0aa64
+
+	/// Dense rank of the hospital's payment reduction within its state (1 = largest reduction).
+	measure 'Rank in State' = ```
+			VAR st = SELECTEDVALUE ( Hospital[State] )
+			VAR cur = MAX ( Hospital[Payment Reduction %] )
+			RETURN IF ( HASONEVALUE ( Hospital[Facility ID] ) && NOT ISBLANK ( cur ),
+			    RANKX ( FILTER ( ALL ( Hospital ), Hospital[State] = st && NOT ISBLANK ( Hospital[Payment Reduction %] ) ),
+			            Hospital[Payment Reduction %], cur, DESC, DENSE ) )
+			```
+		formatString: 0
+		lineageTag: 153cad12-da7f-5f01-9587-2ca40c4898dd
+
+	column 'Facility ID'
+		dataType: string
+		lineageTag: e7ac3f55-ba11-5c95-87f2-baa10da886ea
+		summarizeBy: none
+		sourceColumn: Facility ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hospital
+		dataType: string
+		lineageTag: 43693c57-3f5c-5a12-92b8-8482f64782ed
+		summarizeBy: none
+		sourceColumn: Hospital
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: 7b323778-1862-57d1-b50f-c12bd65a638a
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 31643f49-412d-5f47-96ba-eb8ead909ca3
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Census Division'
+		dataType: string
+		lineageTag: b7009d1e-33cd-58f1-8a9f-759d9216bac4
+		summarizeBy: none
+		sourceColumn: Census Division
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Urban/Rural'
+		dataType: string
+		lineageTag: 7d89208a-9278-568c-bd19-2e55a61d8b6d
+		summarizeBy: none
+		sourceColumn: Urban/Rural
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Teaching Status'
+		dataType: string
+		lineageTag: 611ddbaf-1cd4-5de8-a7d6-9414a42df15b
+		summarizeBy: none
+		sourceColumn: Teaching Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ownership
+		dataType: string
+		lineageTag: 40862838-a0e4-5b51-8242-8cddb489e7e0
+		summarizeBy: none
+		sourceColumn: Ownership
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hospital Type'
+		dataType: string
+		lineageTag: bec756f3-090e-5b33-a790-3dae520fa8b4
+		summarizeBy: none
+		sourceColumn: Hospital Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bed Size Group'
+		dataType: string
+		lineageTag: 1ac6819c-06cb-5a04-aa7f-a5f0da0811bb
+		summarizeBy: none
+		sourceColumn: Bed Size Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column Beds
+		dataType: int64
+		formatString: #,0
+		lineageTag: 3f1a5855-19f2-5bf8-8e6d-25bfb8a50798
+		summarizeBy: none
+		sourceColumn: Beds
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Star Rating'
+		dataType: int64
+		formatString: 0
+		lineageTag: fbb4c9fd-1a20-5aef-882d-9093e2b7dd9d
+		summarizeBy: none
+		sourceColumn: Star Rating
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Has Payment Factor'
+		dataType: string
+		lineageTag: f2f98fd3-b7e1-50fb-a57a-402a4d2e7d56
+		summarizeBy: none
+		sourceColumn: Has Payment Factor
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Payment Adjustment Factor'
+		dataType: double
+		formatString: 0.0000
+		lineageTag: a2bbf3ba-ebba-502a-a5ff-688d06707d0e
+		summarizeBy: none
+		sourceColumn: Payment Adjustment Factor
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Payment Reduction %'
+		dataType: double
+		formatString: 0.00"%"
+		lineageTag: 594c4f02-cb67-596a-aa55-506078f9007a
+		summarizeBy: none
+		sourceColumn: Payment Reduction %
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Payment Reduced'
+		dataType: string
+		lineageTag: b376a999-a433-5742-8e90-ca1264dd5621
+		summarizeBy: none
+		sourceColumn: Payment Reduced
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dual Proportion'
+		dataType: double
+		formatString: 0.000
+		lineageTag: a6940bba-6a72-5ff5-b109-2353500f9197
+		summarizeBy: none
+		sourceColumn: Dual Proportion
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Peer Group'
+		dataType: int64
+		formatString: 0
+		lineageTag: e085a0cd-ae23-52c2-bd79-1c9754988007
+		summarizeBy: none
+		sourceColumn: Peer Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measures Flagged'
+		dataType: int64
+		formatString: 0
+		lineageTag: b7644699-c004-5cce-a36b-4f5fa74543d1
+		summarizeBy: none
+		sourceColumn: Measures Flagged
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Hospital = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "\hospital.csv"), [Delimiter = ",", Columns = 19, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Blanks = Table.ReplaceValue(Promoted, "", null, Replacer.ReplaceValue, Table.ColumnNames(Promoted)),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"Facility ID", type text}, {"Hospital", type text}, {"State", type text}, {"City", type text}, {"Census Division", type text}, {"Urban/Rural", type text}, {"Teaching Status", type text}, {"Ownership", type text}, {"Hospital Type", type text}, {"Bed Size Group", type text}, {"Beds", Int64.Type}, {"Star Rating", Int64.Type}, {"Has Payment Factor", type text}, {"Payment Adjustment Factor", type number}, {"Payment Reduction %", type number}, {"Payment Reduced", type text}, {"Dual Proportion", type number}, {"Peer Group", Int64.Type}, {"Measures Flagged", Int64.Type}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

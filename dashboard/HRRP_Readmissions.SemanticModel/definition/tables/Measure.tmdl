@@ -1,0 +1,49 @@
+table Measure
+	lineageTag: 1b136a50-08d8-5f42-80a4-17731f7e1408
+
+	column 'Measure Code'
+		dataType: string
+		lineageTag: 713ab0c2-3a8f-5106-ae1e-29f5032e688d
+		summarizeBy: none
+		sourceColumn: Measure Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Measure
+		dataType: string
+		lineageTag: ce9cda20-cb26-53e2-bdea-4b2dc0b0d9f3
+		summarizeBy: none
+		sourceColumn: Measure
+		sortByColumn: 'Measure Sort'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measure Full Name'
+		dataType: string
+		lineageTag: 300199b2-a7f6-5f67-9f6b-1602aca4b657
+		summarizeBy: none
+		sourceColumn: Measure Full Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measure Sort'
+		dataType: int64
+		formatString: 0
+		lineageTag: 100df479-7f18-5119-a384-24e150680840
+		summarizeBy: none
+		sourceColumn: Measure Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Measure = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "\measure.csv"), [Delimiter = ",", Columns = 4, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Blanks = Table.ReplaceValue(Promoted, "", null, Replacer.ReplaceValue, Table.ColumnNames(Promoted)),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"Measure Code", type text}, {"Measure", type text}, {"Measure Full Name", type text}, {"Measure Sort", Int64.Type}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

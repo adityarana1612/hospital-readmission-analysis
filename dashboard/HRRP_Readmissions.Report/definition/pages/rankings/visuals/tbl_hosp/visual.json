@@ -1,0 +1,212 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "tbl_hosp",
+  "position": {
+    "x": 16,
+    "y": 132,
+    "z": 6000,
+    "width": 824,
+    "height": 552,
+    "tabOrder": 6000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hospital"
+                    }
+                  },
+                  "Property": "Hospital"
+                }
+              },
+              "queryRef": "Hospital.Hospital",
+              "nativeQueryRef": "Hospital"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hospital"
+                    }
+                  },
+                  "Property": "State"
+                }
+              },
+              "queryRef": "Hospital.State",
+              "nativeQueryRef": "State"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hospital"
+                    }
+                  },
+                  "Property": "Rank in State"
+                }
+              },
+              "queryRef": "Hospital.Rank in State",
+              "nativeQueryRef": "Rank in State"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hospital"
+                    }
+                  },
+                  "Property": "Mean Payment Reduction %"
+                }
+              },
+              "queryRef": "Hospital.Mean Payment Reduction %",
+              "nativeQueryRef": "Mean Payment Reduction %",
+              "displayName": "Payment reduction %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hospital"
+                    }
+                  },
+                  "Property": "Hospital Measures Flagged"
+                }
+              },
+              "queryRef": "Hospital.Hospital Measures Flagged",
+              "nativeQueryRef": "Hospital Measures Flagged",
+              "displayName": "Measures flagged"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ReadmissionFact"
+                    }
+                  },
+                  "Property": "Mean ERR"
+                }
+              },
+              "queryRef": "ReadmissionFact.Mean ERR",
+              "nativeQueryRef": "Mean ERR",
+              "displayName": "Mean ERR (selected measures)"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hospital"
+                    }
+                  },
+                  "Property": "Teaching Status"
+                }
+              },
+              "queryRef": "Hospital.Teaching Status",
+              "nativeQueryRef": "Teaching Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Hospital"
+                    }
+                  },
+                  "Property": "Bed Size Group"
+                }
+              },
+              "queryRef": "Hospital.Bed Size Group",
+              "nativeQueryRef": "Bed Size Group"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Hospital"
+                  }
+                },
+                "Property": "Mean Payment Reduction %"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": false
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Hospitals by payment reduction'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#0b0b0b'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

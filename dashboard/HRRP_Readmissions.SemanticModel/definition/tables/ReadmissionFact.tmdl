@@ -1,0 +1,227 @@
+table ReadmissionFact
+	lineageTag: 598f8f9a-a02f-5550-9082-93331cc1df47
+
+	/// Average excess readmission ratio (predicted / expected). 1.000 = as expected for the hospital's case mix.
+	measure 'Mean ERR' = AVERAGE ( ReadmissionFact[ERR] )
+		formatString: 0.000
+		lineageTag: 0651dc09-5396-5333-b339-233c182d2ab9
+
+	/// Median excess readmission ratio.
+	measure 'Median ERR' = MEDIAN ( ReadmissionFact[ERR] )
+		formatString: 0.000
+		lineageTag: c6febef2-b5af-5029-b8bc-b08c7fe6bdb1
+
+	/// Hospital x measure rows where CMS published an ERR.
+	measure 'Hospital-Measures with ERR' = COUNT ( ReadmissionFact[ERR] )
+		formatString: #,0
+		lineageTag: 91d9a9eb-2f29-585c-a4f3-82eef290c2bb
+
+	/// Share of hospital x measure results with more readmissions than expected.
+	measure '% ERR Above 1' = DIVIDE ( CALCULATE ( COUNT ( ReadmissionFact[ERR] ), ReadmissionFact[ERR] > 1 ), [Hospital-Measures with ERR] )
+		formatString: 0.0%
+		lineageTag: 39ce7c59-010a-56ed-a780-95e76693bf74
+
+	/// Official CMS penalty indicator = Y (>= 25 eligible discharges and ERR above peer-group median).
+	measure 'Penalty Flags' = CALCULATE ( COUNTROWS ( ReadmissionFact ), ReadmissionFact[Penalty Indicator] = "Y" )
+		formatString: #,0
+		lineageTag: be2a86aa-da8c-511f-b549-cccd1a743cc9
+
+	/// Hospital x measure rows with >= 25 eligible discharges (can count toward a penalty).
+	measure 'Eligible Hospital-Measures' = CALCULATE ( COUNTROWS ( ReadmissionFact ), ReadmissionFact[Eligible Discharges] >= 25, NOT ISBLANK ( ReadmissionFact[Penalty Indicator] ) )
+		formatString: #,0
+		lineageTag: 98b7c8b1-e5b3-58c5-b033-b1c5af765700
+
+	/// Penalty flags / eligible hospital-measures. About 50% by design (peer-median threshold).
+	measure 'Penalty Flag Rate' = DIVIDE ( [Penalty Flags], [Eligible Hospital-Measures] )
+		formatString: 0.0%
+		lineageTag: 764bf0d2-4645-54c8-975e-5eb94e1e9fa1
+
+	/// Sum of each hospital's payment reduction attributed to measures (CMS formula). Percentage points, NOT dollars.
+	measure 'Total Reduction Points' = SUM ( ReadmissionFact[Payment Reduction Points] )
+		formatString: #,0.0
+		lineageTag: 43dbfd90-042a-5e76-85f4-3783b4627b5c
+
+	/// Measure's share of selected payment-reduction points.
+	measure 'Share of Reduction Points' = DIVIDE ( [Total Reduction Points], CALCULATE ( [Total Reduction Points], ALLSELECTED ( 'Measure' ) ) )
+		formatString: 0.0%
+		lineageTag: a516225e-1945-553d-a7ec-294a70808139
+
+	/// Pareto cumulative share: this measure plus all measures with larger contributions.
+	measure 'Cumulative Share of Reduction Points' = ```
+			// ALLSELECTED on the whole table: Measure[Measure] is sorted by Measure Sort, so visuals also
+			// group by Measure Sort, and clearing only Measure[Measure] would leave each row on its own.
+			VAR cur = [Total Reduction Points]
+			RETURN CALCULATE (
+			    VAR tbl = ADDCOLUMNS ( VALUES ( 'Measure'[Measure] ), "@p", [Total Reduction Points] )
+			    RETURN DIVIDE ( SUMX ( FILTER ( tbl, [@p] >= cur ), [@p] ), SUMX ( tbl, [@p] ) ),
+			    ALLSELECTED ( 'Measure' ) )
+			```
+		formatString: 0.0%
+		lineageTag: 364af71c-7934-59b9-b944-332b00688212
+
+	/// Derived estimate: readmissions x (1 - 1/ERR) where ERR > 1. Not a CMS count; excludes suppressed counts.
+	measure 'Total Est Excess Readmissions' = SUM ( ReadmissionFact[Est Excess Readmissions] )
+		formatString: #,0
+		lineageTag: ca7aa8d7-e170-5a53-94c1-4a87d990406d
+
+	/// Measure's share of estimated excess readmissions.
+	measure 'Share of Est Excess Readmissions' = DIVIDE ( [Total Est Excess Readmissions], CALCULATE ( [Total Est Excess Readmissions], ALLSELECTED ( 'Measure' ) ) )
+		formatString: 0.0%
+		lineageTag: 088321af-c13f-53f5-8a8e-723a79d264a9
+
+	/// Number of performance periods in the data. 1 = no trend analysis possible.
+	measure 'Reporting Periods' = DISTINCTCOUNT ( ReadmissionFact[Reporting Period] )
+		formatString: 0
+		lineageTag: e4bcf402-b67b-5232-a6cc-ac9be815a274
+
+	column 'Facility ID'
+		dataType: string
+		lineageTag: 2b96f3de-92a3-5942-a19f-b36af77420f9
+		summarizeBy: none
+		sourceColumn: Facility ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measure Code'
+		dataType: string
+		lineageTag: 117c2473-7cfc-5feb-b2e1-9287beb292f6
+		summarizeBy: none
+		sourceColumn: Measure Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Period Start'
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 1eeeeea7-3db0-5547-9cb7-997b98edfe96
+		summarizeBy: none
+		sourceColumn: Period Start
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Period End'
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: a8031b41-5e1c-5d9e-ad67-81271b625380
+		summarizeBy: none
+		sourceColumn: Period End
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Reporting Period'
+		dataType: string
+		lineageTag: 5b164775-64a7-5749-8237-2e7f9a53e809
+		summarizeBy: none
+		sourceColumn: Reporting Period
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Record Status'
+		dataType: string
+		lineageTag: 58ae32c2-4f6d-563a-bbf0-0ece5efc1b96
+		summarizeBy: none
+		sourceColumn: Record Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column ERR
+		dataType: double
+		formatString: 0.0000
+		lineageTag: 841a1b02-5e14-5883-9c11-2cdae10c7662
+		summarizeBy: none
+		sourceColumn: ERR
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Predicted Rate'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 1fdf4880-c851-55d1-9d17-1f7c50df32a3
+		summarizeBy: none
+		sourceColumn: Predicted Rate
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Expected Rate'
+		dataType: double
+		formatString: 0.00
+		lineageTag: 28e1a236-fabf-5d3b-8491-57b6ac6b1a6c
+		summarizeBy: none
+		sourceColumn: Expected Rate
+
+		annotation SummarizationSetBy = Automatic
+
+	column Discharges
+		dataType: int64
+		formatString: #,0
+		lineageTag: a8b76047-f5d8-5c42-b730-901cdcb127a6
+		summarizeBy: none
+		sourceColumn: Discharges
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Eligible Discharges'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 9e63a0c8-89d1-513c-89ec-b14b07419a6f
+		summarizeBy: none
+		sourceColumn: Eligible Discharges
+
+		annotation SummarizationSetBy = Automatic
+
+	column Readmissions
+		dataType: int64
+		formatString: #,0
+		lineageTag: ec55a16b-4078-54ab-9d06-dd792a4ef2e6
+		summarizeBy: none
+		sourceColumn: Readmissions
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Peer Median ERR'
+		dataType: double
+		formatString: 0.0000
+		lineageTag: 91968a1a-88cb-5227-b062-8cf0d446520c
+		summarizeBy: none
+		sourceColumn: Peer Median ERR
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Penalty Indicator'
+		dataType: string
+		lineageTag: fa62dca7-2380-5a9c-b0c7-de08a39c3b2c
+		summarizeBy: none
+		sourceColumn: Penalty Indicator
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Payment Reduction Points'
+		dataType: double
+		formatString: 0.000
+		lineageTag: f88e9927-e514-5709-baae-d9bafd7672d2
+		summarizeBy: none
+		sourceColumn: Payment Reduction Points
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Est Excess Readmissions'
+		dataType: double
+		formatString: #,0.0
+		lineageTag: 6f532739-9126-519a-9816-40cc012c32db
+		summarizeBy: none
+		sourceColumn: Est Excess Readmissions
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ReadmissionFact = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "\readmission_fact.csv"), [Delimiter = ",", Columns = 16, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Blanks = Table.ReplaceValue(Promoted, "", null, Replacer.ReplaceValue, Table.ColumnNames(Promoted)),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"Facility ID", type text}, {"Measure Code", type text}, {"Period Start", type date}, {"Period End", type date}, {"Reporting Period", type text}, {"Record Status", type text}, {"ERR", type number}, {"Predicted Rate", type number}, {"Expected Rate", type number}, {"Discharges", Int64.Type}, {"Eligible Discharges", Int64.Type}, {"Readmissions", Int64.Type}, {"Peer Median ERR", type number}, {"Penalty Indicator", type text}, {"Payment Reduction Points", type number}, {"Est Excess Readmissions", type number}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

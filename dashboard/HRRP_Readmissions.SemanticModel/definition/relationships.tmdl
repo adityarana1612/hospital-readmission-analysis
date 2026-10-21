@@ -1,0 +1,7 @@
+relationship a609c5fd-a3a4-58c1-8fdb-8b359eec10bb
+	fromColumn: ReadmissionFact.'Facility ID'
+	toColumn: Hospital.'Facility ID'
+
+relationship 88b68989-76e1-5b07-be95-1d0c09dd897b
+	fromColumn: ReadmissionFact.'Measure Code'
+	toColumn: 'Measure'.'Measure Code'

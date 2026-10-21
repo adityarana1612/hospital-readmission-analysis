@@ -1,0 +1,5 @@
+/// Folder containing hospital.csv, measure.csv and readmission_fact.csv (created by python -m src.powerbi_export).
+expression DataFolder = "D:\hospital-readmission-analysis\data\powerbi" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
+	lineageTag: a2086876-01a7-502c-93bf-16475c84a653
+
+	annotation PBI_ResultType = Text

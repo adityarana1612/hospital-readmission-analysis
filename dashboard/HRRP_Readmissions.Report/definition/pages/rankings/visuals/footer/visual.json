@@ -1,0 +1,36 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "footer",
+  "position": {
+    "x": 16,
+    "y": 692,
+    "z": 1000,
+    "width": 1248,
+    "height": 24,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Source: CMS HRRP FY 2026 (discharges Jul 2021 - Jun 2024) and FY 2026 HRRP Supplemental File. Associations only; payment figures are percentages, not dollars.",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#898781"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

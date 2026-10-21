@@ -46,3 +46,10 @@ Thumbs.db
 
 # --- Large regenerable SQL export (python -m src.oracle_loader --all) ---
 reports/sql_results/hospital_rankings__hospital_measure_percentiles.csv
+
+# --- Power BI export CSVs (python -m src.powerbi_export) ---
+data/powerbi/*
+
+# --- Power BI Desktop local files inside the PBIP ---
+dashboard/**/.pbi/localSettings.json
+dashboard/**/.pbi/cache.abf
